@@ -18,7 +18,7 @@ RUN mkdir /build \
   && curl -sSL https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
    | tar zxC /build --strip-component 1 \
   && cd /build \
-  && DEBUG_LEVEL=0 LIB_MODE=shared make -j$(nproc) tools
+  && DEBUG_LEVEL=0 LIB_MODE=shared PORTABLE=1 make -j$(nproc) tools
 
 RUN mkdir -p /rocksdb/bin /rocksdb/lib \
   && cd /build \
