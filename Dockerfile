@@ -12,15 +12,16 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libzstd-dev \
   zlib1g-dev
 
-ENV ROCKSDB_VERSION 7.1.2
+ARG ROCKSDB_VERSION=7.1.2
 
-RUN curl -LO https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
-  && tar xvf v${ROCKSDB_VERSION}.tar.gz \
-  && cd rocksdb-${ROCKSDB_VERSION} \
+RUN mkdir /build \
+  && curl -sSL https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
+   | tar zxC /build --strip-component 1 \
+  && cd /build \
   && DEBUG_LEVEL=0 LIB_MODE=shared make -j$(nproc) tools
 
 RUN mkdir -p /rocksdb/bin /rocksdb/lib \
-  && cd /rocksdb-${ROCKSDB_VERSION} \
+  && cd /build \
   # cf. https://www.cmcrossroads.com/article/printing-value-makefile-variable
   && echo 'print-%:\n\t@echo $($*)' >>Makefile \
   && tools=$(make print-TOOLS | tail -1 | sed 's/ \+/\n/g' | sort -u) \
