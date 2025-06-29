@@ -14,9 +14,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 
 ARG ROCKSDB_VERSION=7.9.2
 
-RUN mkdir /build \
-  && curl -sSL https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
-   | tar zxC /build --strip-component 1 \
+RUN curl -sSL https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
+   | tar zx --one-top-level=/build --strip-component 1 \
   && cd /build \
   && DEBUG_LEVEL=0 LIB_MODE=shared PORTABLE=1 make -j$(nproc) tools
 
