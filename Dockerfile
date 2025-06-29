@@ -1,4 +1,4 @@
-FROM debian:bullseye as builder
+FROM debian:bullseye AS builder
 
 # cf. https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 RUN apt-get update && apt-get install --no-install-recommends -y \
