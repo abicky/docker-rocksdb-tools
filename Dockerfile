@@ -1,3 +1,5 @@
+ARG BUILDKIT_SBOM_SCAN_STAGE=true
+
 FROM debian:bookworm AS builder
 
 # cf. https://github.com/facebook/rocksdb/blob/master/INSTALL.md
