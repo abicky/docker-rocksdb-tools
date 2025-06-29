@@ -1,4 +1,4 @@
-FROM debian:bullseye AS builder
+FROM debian:bookworm AS builder
 
 # cf. https://github.com/facebook/rocksdb/blob/master/INSTALL.md
 RUN apt-get update && apt-get install --no-install-recommends -y \
@@ -47,16 +47,16 @@ COPY --from=builder \
   /lib/${ARCH}-linux-gnu/libc.so.6 \
   /lib/${ARCH}-linux-gnu/libdl.so.2 \
   /lib/${ARCH}-linux-gnu/libgcc_s.so.1 \
+  /lib/${ARCH}-linux-gnu/libgflags.so.2.2 \
+  /lib/${ARCH}-linux-gnu/liblz4.so.1 \
   /lib/${ARCH}-linux-gnu/libm.so.6 \
   /lib/${ARCH}-linux-gnu/libpthread.so.0 \
   /lib/${ARCH}-linux-gnu/librt.so.1 \
+  /lib/${ARCH}-linux-gnu/libsnappy.so.1 \
+  /lib/${ARCH}-linux-gnu/libstdc++.so.6 \
   /lib/${ARCH}-linux-gnu/libz.so.1 \
+  /lib/${ARCH}-linux-gnu/libzstd.so.1 \
   /lib/${ARCH}-linux-gnu/
 COPY --from=builder \
   /rocksdb/lib/ \
-  /usr/lib/${ARCH}-linux-gnu/libgflags.so.2.2 \
-  /usr/lib/${ARCH}-linux-gnu/liblz4.so.1 \
-  /usr/lib/${ARCH}-linux-gnu/libsnappy.so.1 \
-  /usr/lib/${ARCH}-linux-gnu/libstdc++.so.6 \
-  /usr/lib/${ARCH}-linux-gnu/libzstd.so.1 \
   /usr/lib/${ARCH}-linux-gnu/
