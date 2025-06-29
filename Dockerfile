@@ -14,7 +14,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
   libzstd-dev \
   zlib1g-dev
 
-ARG ROCKSDB_VERSION=7.9.2
+ARG ROCKSDB_VERSION=10.2.1
 
 RUN curl -sSL https://github.com/facebook/rocksdb/archive/refs/tags/v${ROCKSDB_VERSION}.tar.gz \
    | tar zx --one-top-level=/build --strip-component 1 \
